@@ -10,7 +10,7 @@ namespace Core.Selection
     {
         private readonly SelectionInputController _selectionInputController;
 
-        private ISelectable _currentSelected;
+        private Selectable _currentSelected;
 
         public Action<GameObject> OnSelected;
         public Action<GameObject> OnDeselected;
@@ -29,22 +29,25 @@ namespace Core.Selection
                 return;
 
             _currentSelected.Deselect();
-            OnDeselected?.Invoke(_currentSelected.Collider.gameObject);
+            
+            OnDeselected?.Invoke(_currentSelected.gameObject);
         }
 
         public void TrySelectObject(Vector2 screenPosition)
         {
             var collider = CameraRaycaster.Raycast(screenPosition);
-
+            
             if (collider == null)
                 return;
 
-            if (!collider.gameObject.TryGetComponent(out ISelectable selectable))
+            if (!collider.gameObject.TryGetComponent(out Selectable selectable))
                 return;
-
+            
             selectable.Select();
+            
             _currentSelected = selectable;
-            OnSelected?.Invoke(collider.gameObject);
+            
+            OnSelected?.Invoke(selectable.gameObject);
         }
     }
 }

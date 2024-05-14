@@ -1,4 +1,5 @@
 using System;
+using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -17,9 +18,9 @@ public class SelectionInputController
     
 
     [Inject]
-    public SelectionInputController(PlayerInputActions playerInputActions)
+    public SelectionInputController(InputActionsManager inputActionsManager)
     {
-        _playerInputActions = playerInputActions;
+        _playerInputActions = inputActionsManager.PlayerInputActions;
         _playerInputActions.Base.SelectPosition.performed += ReadSelectPosition;
 
         _playerInputActions.Base.Select.performed += ReadSelect;
@@ -32,7 +33,10 @@ public class SelectionInputController
         OnSelectPositionChanged?.Invoke(_mousePosition);
     }
 
-    private void ReadSelect(InputAction.CallbackContext ctx) => OnSelected?.Invoke(_mousePosition);
+    private void ReadSelect(InputAction.CallbackContext ctx)
+    {
+        OnSelected?.Invoke(_mousePosition);
+    }
 
     private void ReadDeselect(InputAction.CallbackContext ctx) => OnDeselected?.Invoke();
 }

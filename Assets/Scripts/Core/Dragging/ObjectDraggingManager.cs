@@ -1,4 +1,5 @@
-﻿using Core.Selection.Base;
+﻿using System;
+using Core.Selection.Base;
 using UnityEngine;
 using Zenject;
 
@@ -9,7 +10,9 @@ namespace Core.Selection.Drag
         private ObjectSelectionManager _objectSelectionManager;
         private SelectionInputController _selectionInputController;
 
-        private IDraggable _currentDraggable;
+        private Draggable _currentDraggable;
+        
+        public Action<Draggable> OnDragged;
 
         [Inject]
         public ObjectDraggingManager(ObjectSelectionManager objectSelectionManager,
@@ -25,9 +28,10 @@ namespace Core.Selection.Drag
 
         private void TryAssignDraggable(GameObject selectedObject)
         {
-            if (!selectedObject.TryGetComponent(out IDraggable draggable))
+            
+            if (!selectedObject.TryGetComponent(out Draggable draggable))
                 return;
-
+            
             _currentDraggable = draggable;
         }
 
@@ -44,6 +48,7 @@ namespace Core.Selection.Drag
             
             _currentDraggable.Drag(worldPointPosition);
             
+            OnDragged?.Invoke(_currentDraggable);    
             
         }
     }

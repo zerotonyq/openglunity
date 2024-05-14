@@ -1,10 +1,10 @@
-﻿namespace Core.Connection.Enum
+﻿namespace Core.Blocks.Types
 {
     public enum BlockType
     {
         None,
-        Body,
         Gun,
-        Shield
+        Shield,
+        Body
     }
 }

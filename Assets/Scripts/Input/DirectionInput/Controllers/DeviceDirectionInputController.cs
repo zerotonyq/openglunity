@@ -7,14 +7,13 @@ namespace Input.DirectionInput
 {
     public class DeviceDirectionInputController : IDirectionInput
     {
-        private readonly PlayerInputActions _playerInputActions;
-        private Vector2 _currentDirection;
         
+        private Vector2 _currentDirection;
+        private PlayerInputActions _playerInputActions;
         [Inject]
-        public DeviceDirectionInputController(PlayerInputActions playerInputActions)
+        public DeviceDirectionInputController(InputActionsManager inputActionsManager)
         {
-            _playerInputActions = playerInputActions;
-            _playerInputActions.Base.Enable();
+            _playerInputActions = inputActionsManager.PlayerInputActions;
             _playerInputActions.Base.Movement.performed += ModifyDirection;
             _playerInputActions.Base.Movement.canceled += ModifyDirection;
         }
