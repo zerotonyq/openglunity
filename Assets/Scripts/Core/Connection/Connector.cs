@@ -19,7 +19,7 @@ namespace Core.Connection
                 return;
             
             HasConnection = false;
-            GameObject.Destroy(Connectable);
+           // GameObject.Destroy(Connectable);
             Connectable = null;
         }
     }

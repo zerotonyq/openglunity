@@ -31,7 +31,6 @@ namespace DI
             var view = Container.InstantiatePrefab(prefab).GetComponent<MovementView>();
             Container.BindInstance(view);
             Container.BindInstance(view.GetComponent<GridConnectionController>()).AsSingle();
-            Container.BindInstance(view.GetComponent<BlockMergeController>()).AsSingle();
         }
     }
 }
