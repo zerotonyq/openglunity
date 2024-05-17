@@ -1,7 +1,10 @@
 ﻿using Core.Blocks;
 using Core.Connection;
+using Core.EntryPoint;
+using Core.Gears.Weapons;
 using Core.Movement.Model;
 using Core.Movement.View;
+using Core.Pooling;
 using Core.Selection;
 using Core.Selection.Drag;
 using Input;
@@ -13,11 +16,11 @@ namespace DI
 {
     public class GameplayInstaller : MonoInstaller
     {
-        public MovementView prefab;
+        public Projectile projectilePrefab;
+        public Rifle enemyPrefab;
         public override void InstallBindings()
         {
             //movement of the player
-            Container.Bind<ITickable>().To<MovementController>().AsSingle().NonLazy();
             Container.Bind<IDirectionInput>().To<DeviceDirectionInputController>().AsSingle();
 
             
@@ -26,11 +29,10 @@ namespace DI
             Container.Bind<SelectionInputController>().AsSingle().NonLazy();
             Container.Bind<ObjectSelectionManager>().AsSingle().NonLazy();
             Container.Bind<ObjectDraggingManager>().AsSingle().NonLazy();
-            
-            
-            var view = Container.InstantiatePrefab(prefab).GetComponent<MovementView>();
-            Container.BindInstance(view);
-            Container.BindInstance(view.GetComponent<GridConnectionController>()).AsSingle();
+
+
+            Container.Bind<PoolManager>().AsSingle().NonLazy();
+            Container.Bind<GameplayEntryPoint>().AsSingle().WithArguments(projectilePrefab, enemyPrefab).NonLazy();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Core.Selection.Drag
             _selectionInputController = selectionInputController;
 
             objectSelectionManager.OnSelected += TryAssignDraggable;
-            objectSelectionManager.OnDeselected += TryUnassignDraggable;
+            objectSelectionManager.OnDeselected += UnassignDraggable;
             _selectionInputController.OnSelectPositionChanged += DragCurrent;
         }
 
@@ -35,7 +35,7 @@ namespace Core.Selection.Drag
             _currentDraggable = draggable;
         }
 
-        private void TryUnassignDraggable(GameObject selectedObject)
+        private void UnassignDraggable(GameObject selectedObject)
         {
             _currentDraggable = null;
         }

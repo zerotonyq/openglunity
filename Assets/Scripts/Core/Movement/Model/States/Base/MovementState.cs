@@ -21,13 +21,13 @@ namespace Core.Movement.Fsm.States.Base
         public override void Enter()
         {
             base.Enter();
-            Debug.Log("Entered " + this.GetType());
+            //Debug.Log("Entered " + this.GetType());
         }
 
         public override void Exit()
         {
             base.Exit();
-            Debug.Log("Exited " + this.GetType());
+            //Debug.Log("Exited " + this.GetType());
         }
     }
 }
